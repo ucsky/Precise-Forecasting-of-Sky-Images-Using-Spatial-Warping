@@ -8,6 +8,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - pip
   - _anaconda_depends=2019.03=py27_0
   - _libgcc_mutex=0.1=main
   - alabaster=0.7.12=py27_0
