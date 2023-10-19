@@ -4,7 +4,7 @@ RUN apt-get install --allow-unauthenticated wget -y
 RUN apt-get install gfortran -y
 RUN apt-get install emacs -y
 
-# Create worker user
+# Create worker user.
 ARG UID_WORKER=1000
 ARG GID_WORKER=1000
 RUN groupadd -g $GID_WORKER worker
@@ -15,6 +15,7 @@ RUN useradd \
     --home-dir /home/worker \
     worker
 
+# Switch to worker.
 USER worker
 WORKDIR /home/worker
 
@@ -28,17 +29,18 @@ COPY --chown=worker:worker ./warp.py ./warp.py
 COPY --chown=worker:worker ./environment.yml ./environment.yml
 COPY --chown=worker:worker ./requirements.txt ./requirements.txt
 COPY --chown=worker:worker ./entrypoints ./entrypoints
+COPY --chown=worker:worker ./network-sintel.pytorch ./network-sintel.pytorch
 
-# Téléchargez le script d'installation de Miniconda
+# Dowload miniconda install script. 
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
 
-# Installez Miniconda en utilisant le script téléchargé
+# Install miniconda.
 RUN bash miniconda.sh -b -p /home/worker/.miniconda3
 
-# Ajoutez le chemin d'installation de Miniconda à la variable PATH
+# Add to path.
 ENV PATH="/home/worker/.miniconda3/bin:${PATH}"
 
-# Nettoyez les fichiers temporaires
+# Cleaning.
 RUN rm miniconda.sh
 
 # Add variables to .bashrc
@@ -47,16 +49,19 @@ RUN conda init bash
 # Create env.
 RUN conda env create -f environment.yml
 
-# Make RUN commands use the new environment:
+# Make RUN commands use the new environment.
 SHELL ["conda", "run", "-n", "SkyNet", "/bin/bash", "-c"]
 
-# For dbug
+# Checkout.
 RUN which pip
 RUN which python
 RUN python --version
 RUN conda env list
 
+# Install python packages.
 RUN pip install -U pip
 RUN pip install -r requirements.txt
+
+# Activate SkyNet by default.
 RUN echo "conda activate SkyNet" >> .bashrc
 
