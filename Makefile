@@ -19,3 +19,8 @@ docker-build: Dockerfile
 	-t skynet:dev . \
 	)
 
+docker-run-i: ## Run docker container interactively
+docker-run-i:
+	-(\
+	docker run -it --rm --gpus all skynet:dev bash \
+	)
