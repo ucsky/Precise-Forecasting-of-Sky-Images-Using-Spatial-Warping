@@ -15,12 +15,26 @@ docker-build: Dockerfile
 	docker build \
 	--progress=plain \
 	--build-arg UID_WORKER=$$UID \
-	--build-arg GID_WORKER=$$GID \
+	--build-arg GID_WORKER=`id -g` \
 	-t skynet:dev . \
 	)
 
 docker-run-i: ## Run docker container interactively
 docker-run-i:
 	-(\
-	docker run -it --rm --gpus all skynet:dev bash \
+	docker run \
+	-it \
+	--rm \
+	--gpus all \
+	skynet:dev 'bash' \
 	)
+docker-run-train: ## Run docker container interactively
+docker-run-train:
+	-(\
+	docker run \
+	-it \
+	--gpus all \
+	-v $(PWD)/SkyNet_Data:/home/worker/SkyNet_Data \
+	skynet:dev ./entrypoints/train.bash \
+	)
+#	-v $(PWD)/train.py:/home/worker/train.py \
