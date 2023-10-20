@@ -35,6 +35,7 @@ docker-run-train:
 	-it \
 	--gpus all \
 	-v $(PWD)/SkyNet_Data:/home/worker/SkyNet_Data \
+	-v $(PWD)/train.py:/home/worker/train.py \
 	skynet:dev ./entrypoints/train.bash \
 	)
-#	-v $(PWD)/train.py:/home/worker/train.py \
+#	
