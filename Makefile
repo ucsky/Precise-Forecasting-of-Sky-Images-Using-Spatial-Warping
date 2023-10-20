@@ -8,6 +8,10 @@ help:
 
 ###
 
+data-download: ## Download data.
+data-download: SkyNet_Data
+SkyNet_Data:
+	scp -r $${HOST_DATA_SKYNET}:$${PATH_DATA_SKYNET} SkyNet_Data
 
 docker-build: ## Build docker images.
 docker-build: Dockerfile
@@ -28,6 +32,7 @@ docker-run-i:
 	--gpus all \
 	skynet:dev 'bash' \
 	)
+
 docker-run-train: ## Run docker container interactively
 docker-run-train:
 	-(\
