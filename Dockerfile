@@ -1,6 +1,12 @@
-FROM pytorch/pytorch:1.3-cuda10.1-cudnn7-devel
+FROM pytorch/pytorch:1.3-cuda10.1-cudnn7-devel # CRASH
 # FROM pytorch/pytorch:1.9.0-cuda10.2-cudnn7-devel CRASH
-RUN apt --allow-insecure-repositories update
+# FROM pytorch/pytorch:2.1.0-cuda12.1-cudnn8-devel Don't compile
+
+# ENV TZ=Europe/Paris
+# RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt update
+RUN apt install -y tzdata
+RUN apt --allow-insecure-repositories update -y
 RUN apt-get install --allow-unauthenticated wget -y
 RUN apt-get install gfortran -y
 RUN apt-get install emacs -y
