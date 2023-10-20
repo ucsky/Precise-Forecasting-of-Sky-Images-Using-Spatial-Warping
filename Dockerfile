@@ -1,4 +1,4 @@
-FROM docker pull pytorch/pytorch:1.3-cuda10.1-cudnn7-devel
+FROM pytorch/pytorch:1.3-cuda10.1-cudnn7-devel
 # FROM pytorch/pytorch:1.9.0-cuda10.2-cudnn7-devel CRASH
 RUN apt --allow-insecure-repositories update
 RUN apt-get install --allow-unauthenticated wget -y
