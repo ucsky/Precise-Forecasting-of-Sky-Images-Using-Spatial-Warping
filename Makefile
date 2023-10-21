@@ -11,7 +11,11 @@ help:
 data-download: ## Download data.
 data-download: SkyNet_Data
 SkyNet_Data:
-	scp -r $${HOST_DATA_SKYNET}:$${PATH_DATA_SKYNET} SkyNet_Data
+	-(\
+	test -n "$${HOST_DATA_SKYNET}" \
+	&& test -n "$${PATH_DATA_SKYNET}" \
+	&& scp -r $${HOST_DATA_SKYNET}:$${PATH_DATA_SKYNET} SkyNet_Data \
+	)
 
 docker-build: ## Build docker images.
 docker-build: Dockerfile
